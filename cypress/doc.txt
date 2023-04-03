@@ -1,0 +1,8 @@
+- TESTE UNITÁRIO (UNIT TEST)
+  -> São testes a nível de código, por exemplo uma funcao de somar receber dois valores e retorna a soma desses valores.
+
+- TESTE DE INTEGRAÇÃO (INTEGRATION TEST)
+  -> Testar uma funcionalidade, por exemplo, testa o login de um sistema. (Request de delete e o usuario apaga do meu componente)
+
+- TESTE END-TO-END (E2E)
+  -> Teste de ponta a ponta (Simula o usuario usando o sistema)
