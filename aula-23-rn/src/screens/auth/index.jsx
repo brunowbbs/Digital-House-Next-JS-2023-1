@@ -8,7 +8,7 @@ import {
   Alert,
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { useNavigation } from "@react-navigation/native";
+import { StackActions, useNavigation } from "@react-navigation/native";
 
 import { AuthContext } from "../../context/auth";
 
@@ -18,10 +18,13 @@ import styles from "./styles";
 
 export default function AuthScreen() {
   const { setNameUser } = useContext(AuthContext);
-  const { navigate } = useNavigation();
+  const navigation = useNavigation();
 
   const [loading, setLoading] = useState(false);
-  const [formState, setFormState] = useState({ email: "", senha: "" });
+  const [formState, setFormState] = useState({
+    email: "teste@teste.com",
+    senha: "123456",
+  });
 
   async function auth() {
     setLoading(true);
@@ -31,7 +34,7 @@ export default function AuthScreen() {
       console.log(response.data);
       await AsyncStorage.setItem("@token", response.data.token);
       setNameUser(response.data.name);
-      navigate("Home");
+      navigation.dispatch(StackActions.replace("Home"));
     } catch (error) {
       Alert.alert("Erro", "Verifique os dados informados e tente novamente");
     } finally {
@@ -46,6 +49,7 @@ export default function AuthScreen() {
           Informe seus dados corretamente para acessar o sistema.
         </Text>
         <TextInput
+          value={formState.email}
           keyboardType="email-address"
           onChangeText={(txt) =>
             setFormState({ ...formState, email: txt.toLowerCase() })
@@ -55,6 +59,8 @@ export default function AuthScreen() {
           placeholder="E-mail"
         />
         <TextInput
+          secureTextEntry
+          value={formState.senha}
           onChangeText={(txt) => setFormState({ ...formState, senha: txt })}
           placeholderTextColor="#000"
           style={styles.input}
